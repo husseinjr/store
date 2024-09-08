@@ -1,10 +1,9 @@
-import dotenv from 'dotenv';
 import express, { Application, Request, Response } from 'express';
 import { rateLimit } from 'express-rate-limit';
 import errorHandeling from './middleware/error.middleware';
+import config from './middleware/config';
 
-dotenv.config();
-const port: number = Number(process.env.PORT) || 3000;
+const port = config.port || 3000;
 // create instance from the server
 const app: Application = express();
 
