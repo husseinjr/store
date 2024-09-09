@@ -30,7 +30,7 @@ app.get('/', (req: Request, res: Response) => {
 
 // for testing end point throw new error
 app.get('/error', (req: Request, res: Response) => {
-  throw new Error("Error from this endpoint '/error'");
+  // throw new Error("Error from this endpoint '/error'");
   res.json({
     message: 'we will not reach hear',
   });
