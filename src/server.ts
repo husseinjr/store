@@ -1,13 +1,16 @@
-import express, { Application, Request, Response } from 'express';
+import express, { Application, Request, Response, urlencoded } from 'express';
 import { rateLimit } from 'express-rate-limit';
 import errorHandeling from './middleware/error.middleware';
 import config from './middleware/config';
+import dbConnection from './Database/connection';
 
 const port = config.port || 3000;
 // create instance from the server
 const app: Application = express();
 
 // middlewares
+app.use(express.json());
+app.use(urlencoded({ extended: false }));
 app.use(
   rateLimit({
     windowMs: 15 * 60 * 1000, // time
@@ -20,6 +23,16 @@ app.use(
 
 // set view engine to ejs
 app.set('view engine', 'ejs');
+
+// database connection ->
+dbConnection
+  .sync({ force: true })
+  .then(() => {
+    console.log('syncornization done..');
+  })
+  .catch((err) => {
+    console.log('error in synchorization : ', err);
+  });
 
 // routing home
 app.get('/', (req: Request, res: Response) => {

@@ -1,21 +1,16 @@
 import { Sequelize } from 'sequelize';
-import config from '../../middleware/config';
-import dbconfig from '../config.database';
+import config from '../middleware/config';
 
-type Environment = 'development' | 'production';
-
-const env: Environment = (config.nodeEnv as Environment) || 'development';
-
-const requirements = dbconfig[env];
 
 const sequelize = new Sequelize(
-  requirements.dbName,
-  requirements.dbUserName,
-  requirements.dbPassword,
+  config.dbName,
+  config.dbUserName,
+  config.dbPassword,
   {
-    host: requirements.dbHost,
+    host: config.dbHost,
     dialect: 'postgres',
     pool: {
+      // Pool configuration can be added here
       max: 5,
       min: 0,
       acquire: 30000,
